@@ -9,6 +9,8 @@ public class PersonCreatedEvent {
   private String identificationNumber;
   private String firstName;
   private String lastName;
+  private String streetAddress;
+  private String city;
   private final LocalDateTime timestamp = LocalDateTime.now();
 
   public PersonCreatedEvent() {
@@ -26,16 +28,11 @@ public class PersonCreatedEvent {
     return lastName;
   }
 
-  public void setFirstName(String firstName) {
-    this.firstName = firstName;
+  public String getStreetAddress() {
+    return streetAddress;
   }
 
-  public void setLastName(String lastName) {
-    this.lastName = lastName;
+  public String getCity() {
+    return city;
   }
-
-  public void setIdentificationNumber(String identificationNumber) {
-    this.identificationNumber = identificationNumber;
-  }
-
 }
