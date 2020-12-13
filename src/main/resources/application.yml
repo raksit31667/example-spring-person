@@ -1,0 +1,28 @@
+spring:
+  main:
+    allow-bean-definition-overriding: true
+  application:
+    name: example-spring-person
+  kafka:
+    bootstrap-servers: localhost:9092
+    consumer:
+      group-id: $Default
+      key-deserializer: org.apache.kafka.common.serialization.IntegerDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+  data:
+    mongodb:
+      database: example-spring-person
+
+---
+spring:
+  config:
+    activate:
+      on-profile: local
+  data:
+    mongodb:
+      uri: mongodb://localhost:28017
+
+kafka:
+  consume-topics:
+    person-created: person-created
+    person-name-updated: person-name-updated
