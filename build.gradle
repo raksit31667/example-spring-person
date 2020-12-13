@@ -17,9 +17,12 @@ ext {
 }
 
 dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
 	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
 	implementation 'org.springframework.kafka:spring-kafka'
+	implementation 'com.fasterxml.jackson.core:jackson-annotations:2.12.0'
+
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.springframework.kafka:spring-kafka-test'
 	testImplementation 'org.testcontainers:junit-jupiter'
@@ -35,4 +38,13 @@ dependencyManagement {
 
 test {
 	useJUnitPlatform()
+}
+
+def activeProfile = project.hasProperty('profile') ? project.property('profile') : 'local'
+
+bootRun {
+	systemProperty 'spring.profiles.active', activeProfile
+	if (project.hasProperty('args')) {
+		args project.args.split('\\s+')
+	}
 }
