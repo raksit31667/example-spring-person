@@ -26,7 +26,7 @@ public class PersonEventListener {
   @KafkaListener(topics = "${kafka.consume-topics.person-created}", containerFactory = "personCreatedKafkaListenerContainerFactory")
   public void onPersonCreated(PersonCreatedEvent event) {
     Person newPerson = new Person(new PersonId(event.getIdentificationNumber()), new PersonName(event.getFirstName(), event.getLastName()));
-    newPerson.setStreetAddress(new Address(event.getStreetAddress(), event.getCity(), CountryCode.getByCode(event.getCountry())));
+    newPerson.setAddress(new Address(event.getStreetAddress(), event.getCity(), CountryCode.getByCode(event.getCountry())));
     personRepository.save(newPerson);
   }
 

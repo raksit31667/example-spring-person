@@ -26,7 +26,7 @@ public class Person {
     this.personName = Objects.requireNonNull(personName);
   }
 
-  public void setStreetAddress(Address address) {
+  public void setAddress(Address address) {
     this.address = address;
   }
 }
