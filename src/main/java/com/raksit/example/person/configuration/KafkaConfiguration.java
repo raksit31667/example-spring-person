@@ -2,6 +2,7 @@ package com.raksit.example.person.configuration;
 
 import com.raksit.example.person.event.PersonCreatedEvent;
 import com.raksit.example.person.event.PersonNameUpdatedEvent;
+import com.raksit.example.person.event.PersonTaxIssuedEvent;
 import java.util.HashMap;
 import java.util.Map;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
@@ -65,6 +66,24 @@ public class KafkaConfiguration {
     ConcurrentKafkaListenerContainerFactory<String, PersonNameUpdatedEvent> factory =
         new ConcurrentKafkaListenerContainerFactory<>();
     factory.setConsumerFactory(personNameUpdatedConsumerFactory());
+
+    return factory;
+  }
+
+  @Bean
+  public ConsumerFactory<String, PersonTaxIssuedEvent> personTaxIssuedConsumerFactory() {
+    JsonDeserializer<PersonTaxIssuedEvent> deserializer = new JsonDeserializer<>(PersonTaxIssuedEvent.class);
+    deserializer.addTrustedPackages("*");
+    deserializer.ignoreTypeHeaders();
+    return new DefaultKafkaConsumerFactory<>(
+        consumerConfigs(), new StringDeserializer(), deserializer);
+  }
+
+  @Bean
+  public ConcurrentKafkaListenerContainerFactory<String, PersonTaxIssuedEvent> personTaxIssuedKafkaListenerContainerFactory() {
+    ConcurrentKafkaListenerContainerFactory<String, PersonTaxIssuedEvent> factory =
+        new ConcurrentKafkaListenerContainerFactory<>();
+    factory.setConsumerFactory(personTaxIssuedConsumerFactory());
 
     return factory;
   }

@@ -26,3 +26,4 @@ kafka:
   consume-topics:
     person-created: person-created
     person-name-updated: person-name-updated
+    person-tax-issued: person-tax-issued

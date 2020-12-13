@@ -7,6 +7,7 @@ import com.raksit.example.person.aggregate.PersonId;
 import com.raksit.example.person.aggregate.PersonName;
 import com.raksit.example.person.event.PersonCreatedEvent;
 import com.raksit.example.person.event.PersonNameUpdatedEvent;
+import com.raksit.example.person.event.PersonTaxIssuedEvent;
 import com.raksit.example.person.repository.PersonRepository;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.dao.OptimisticLockingFailureException;
@@ -36,6 +37,16 @@ public class PersonEventListener {
     personRepository.findById(new PersonId(event.getIdentificationNumber()))
         .ifPresent(person -> {
           person.updateName(new PersonName(event.getFirstName(), event.getLastName()));
+          personRepository.save(person);
+        });
+  }
+
+  @KafkaListener(topics = "${kafka.consume-topics.person-tax-issued}", containerFactory = "personTaxIssuedKafkaListenerContainerFactory")
+  @Retryable(value = {DuplicateKeyException.class, OptimisticLockingFailureException.class})
+  public void onPersonTaxIssued(PersonTaxIssuedEvent event) {
+    personRepository.findById(new PersonId(event.getIdentificationNumber()))
+        .ifPresent(person -> {
+          person.spendMoney(event.getAmount(), event.getCurrencyCode());
           personRepository.save(person);
         });
   }
