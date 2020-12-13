@@ -9,6 +9,7 @@ import com.raksit.example.person.event.PersonCreatedEvent;
 import com.raksit.example.person.event.PersonNameUpdatedEvent;
 import com.raksit.example.person.event.PersonTaxIssuedEvent;
 import com.raksit.example.person.repository.PersonRepository;
+import java.util.Currency;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.dao.OptimisticLockingFailureException;
 import org.springframework.kafka.annotation.KafkaListener;
@@ -46,8 +47,9 @@ public class PersonEventListener {
   public void onPersonTaxIssued(PersonTaxIssuedEvent event) {
     personRepository.findById(new PersonId(event.getIdentificationNumber()))
         .ifPresent(person -> {
-          person.spendMoney(event.getAmount(), event.getCurrencyCode());
+          person.spendMoney(event.getAmount(), Currency.getInstance(event.getCurrencyCode()), "tax");
           personRepository.save(person);
+          person.getTransaction().forEach(System.out::println);
         });
   }
 }
