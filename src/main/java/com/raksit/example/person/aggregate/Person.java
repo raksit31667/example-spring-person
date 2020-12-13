@@ -16,7 +16,6 @@ public class Person {
 
   private PersonName personName;
   private Address address;
-  private EmailAddress email;
 
   public Person(PersonId personId, PersonName personName) {
     this.personId = Objects.requireNonNull(personId);
@@ -29,9 +28,5 @@ public class Person {
 
   public void setStreetAddress(Address address) {
     this.address = address;
-  }
-
-  public void setEmail(EmailAddress email) {
-    this.email = email;
   }
 }

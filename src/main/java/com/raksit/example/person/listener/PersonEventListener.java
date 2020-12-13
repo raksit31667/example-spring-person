@@ -1,5 +1,6 @@
 package com.raksit.example.person.listener;
 
+import com.neovisionaries.i18n.CountryCode;
 import com.raksit.example.person.aggregate.Address;
 import com.raksit.example.person.aggregate.Person;
 import com.raksit.example.person.aggregate.PersonId;
@@ -25,7 +26,7 @@ public class PersonEventListener {
   @KafkaListener(topics = "${kafka.consume-topics.person-created}", containerFactory = "personCreatedKafkaListenerContainerFactory")
   public void onPersonCreated(PersonCreatedEvent event) {
     Person newPerson = new Person(new PersonId(event.getIdentificationNumber()), new PersonName(event.getFirstName(), event.getLastName()));
-    newPerson.setStreetAddress(new Address(event.getStreetAddress(), event.getCity()));
+    newPerson.setStreetAddress(new Address(event.getStreetAddress(), event.getCity(), CountryCode.getByCode(event.getCountry())));
     personRepository.save(newPerson);
   }
 

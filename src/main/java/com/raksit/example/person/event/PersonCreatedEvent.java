@@ -11,6 +11,7 @@ public class PersonCreatedEvent {
   private String lastName;
   private String streetAddress;
   private String city;
+  private String country;
   private final LocalDateTime timestamp = LocalDateTime.now();
 
   public PersonCreatedEvent() {
@@ -34,5 +35,9 @@ public class PersonCreatedEvent {
 
   public String getCity() {
     return city;
+  }
+
+  public String getCountry() {
+    return country;
   }
 }
