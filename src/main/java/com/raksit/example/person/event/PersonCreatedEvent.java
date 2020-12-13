@@ -15,6 +15,7 @@ public class PersonCreatedEvent {
   private final LocalDateTime timestamp = LocalDateTime.now();
 
   public PersonCreatedEvent() {
+    // Default constructor for Kafka deserialization
   }
 
   public String getIdentificationNumber() {

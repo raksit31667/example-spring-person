@@ -12,6 +12,7 @@ public class PersonNameUpdatedEvent {
   private final LocalDateTime timestamp = LocalDateTime.now();
 
   public PersonNameUpdatedEvent() {
+    // Default constructor for Kafka deserialization
   }
 
   public String getIdentificationNumber() {
