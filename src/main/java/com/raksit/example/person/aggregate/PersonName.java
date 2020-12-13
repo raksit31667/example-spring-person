@@ -11,4 +11,17 @@ public class PersonName {
     this.firstName = Objects.requireNonNull(firstName);
     this.lastName = Objects.requireNonNull(lastName);
   }
+
+  public boolean hasSameName(PersonName otherName) {
+    return otherName.firstName.toLowerCase().trim().equals(firstName.toUpperCase().trim()) &&
+        otherName.lastName.toLowerCase().trim().equals(lastName.toUpperCase().trim());
+  }
+
+  public String getFirstName() {
+    return firstName;
+  }
+
+  public String getLastName() {
+    return lastName;
+  }
 }

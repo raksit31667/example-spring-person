@@ -35,7 +35,7 @@ public class PersonEventListener {
   public void onPersonNameUpdated(PersonNameUpdatedEvent event) {
     personRepository.findById(new PersonId(event.getIdentificationNumber()))
         .ifPresent(person -> {
-          person.setPersonName(new PersonName(event.getFirstName(), event.getLastName()));
+          person.updateName(new PersonName(event.getFirstName(), event.getLastName()));
           personRepository.save(person);
         });
   }

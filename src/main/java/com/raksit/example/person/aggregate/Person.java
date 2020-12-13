@@ -19,11 +19,14 @@ public class Person {
 
   public Person(PersonId personId, PersonName personName) {
     this.personId = Objects.requireNonNull(personId);
-    this.personName = Objects.requireNonNull(personName);
+    updateName(personName);
   }
 
-  public void setPersonName(PersonName personName) {
-    this.personName = Objects.requireNonNull(personName);
+  public void updateName(PersonName newName) {
+    this.personName = Objects.requireNonNull(newName);
+    if (!this.personName.hasSameName(newName)) {
+      this.personName = new PersonName(newName.getFirstName().toUpperCase().trim(), newName.getLastName().toUpperCase().trim());
+    }
   }
 
   public void setAddress(Address address) {
